@@ -18,7 +18,7 @@ apply plugin: 'org.jetbrains.intellij'
 
 // Add intellij task configuration for base intellij version (minimum compatibility)
 intellij {
-    version '2016.3'
+    version '2018.3'
     plugins 'coverage'
     pluginName 'Save Actions'
     // Do not touch the plugin.xml file
@@ -27,7 +27,7 @@ intellij {
 
 // Add plugin group and version
 group 'com.dubreuia'
-version '1.4.0'
+version '2.0.0-ch.css'
 
 // Add only maven central as repository
 repositories {

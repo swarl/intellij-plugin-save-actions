@@ -63,6 +63,11 @@ public enum EpfAction {
             Action.explicitTypeCanBeDiamond,
             EpfKey.remove_redundant_type_arguments),
 
+    unnecessaryParentheses(
+            Action.unnecessaryParentheses,
+            EpfKey.never_use_parentheses_in_expressions
+    )
+
     ;
 
     private final Action action;

@@ -61,8 +61,8 @@
     <depends optional="true" config-file="plugin-java.xml">com.intellij.modules.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <projectService serviceImplementation="com.dubreuia.model.Storage"/>
-        <projectConfigurable id="settings.saveactions" instance="com.dubreuia.ui.Configuration"/>
+        <applicationService serviceImplementation="com.dubreuia.model.Storage"/>
+        <applicationConfigurable id="settings.saveactions" instance="com.dubreuia.ui.Configuration"/>
     </extensions>
 
     <application-components>

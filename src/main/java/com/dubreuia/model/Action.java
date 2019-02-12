@@ -18,7 +18,7 @@ public enum Action {
             activation, true),
 
     activateOnShortcut("Activate save actions on shortcut (default \"CTRL + SHIFT + S\")",
-            activation, false),
+            activation, true),
 
     activateOnBatch("Activate save actions on batch (\"Code > Save Actions > Execute on multiple files\")",
             activation, false),
@@ -104,6 +104,9 @@ public enum Action {
 
     accessCanBeTightened("Change visibility of field or method to lower access",
             java, false),
+
+    unnecessaryParentheses("Remove unnecessary parentheses",
+            java, true),
 
     ;
 

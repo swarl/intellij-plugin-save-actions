@@ -23,7 +23,7 @@ public class Storage implements PersistentStateComponent<Storage> {
 
     public Storage() {
         firstLaunch = true;
-        actions = new HashSet<>();
+        actions = Action.getDefaults();
         exclusions = new HashSet<>();
         inclusions = new HashSet<>();
         configurationPath = null;

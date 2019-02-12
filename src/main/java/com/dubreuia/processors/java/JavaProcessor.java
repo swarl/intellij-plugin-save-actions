@@ -20,6 +20,7 @@ import com.siyeh.ig.style.ControlFlowStatementWithoutBracesInspection;
 import com.siyeh.ig.style.CustomUnqualifiedStaticUsageInspection;
 import com.siyeh.ig.style.FieldMayBeFinalInspection;
 import com.siyeh.ig.style.UnnecessaryFinalOnLocalVariableOrParameterInspection;
+import com.siyeh.ig.style.UnnecessaryParenthesesInspection;
 import com.siyeh.ig.style.UnnecessarySemicolonInspection;
 import com.siyeh.ig.style.UnnecessaryThisInspection;
 import com.siyeh.ig.style.UnqualifiedFieldAccessInspection;
@@ -100,7 +101,8 @@ public enum JavaProcessor implements Processor {
     accessCanBeTightened(Action.accessCanBeTightened,
             () -> new CustomAccessCanBeTightenedInspection(new VisibilityInspection())),
 
-    ;
+    unnecessaryParentheses(Action.unnecessaryParentheses,
+            UnnecessaryParenthesesInspection::new);
 
     private final Action action;
     private final LocalInspectionTool inspection;
