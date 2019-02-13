@@ -17,6 +17,7 @@ import static com.dubreuia.model.Action.organizeImports;
 import static com.dubreuia.model.Action.rearrange;
 import static com.dubreuia.model.Action.reformat;
 import static com.dubreuia.model.Action.reformatChangedCode;
+import static com.dubreuia.model.Action.unnecessaryParentheses;
 import static com.dubreuia.model.Action.unnecessarySemicolon;
 import static com.dubreuia.model.Action.unqualifiedFieldAccess;
 import static com.dubreuia.model.Action.unqualifiedStaticMemberAccess;
@@ -129,7 +130,8 @@ class EpfStorageTest {
                 unqualifiedFieldAccess,
                 explicitTypeCanBeDiamond,
                 localCanBeFinal,
-                fieldCanBeFinal
+                fieldCanBeFinal,
+                unnecessaryParentheses
         );
 
         assertThat(epfStorage.getActions()).isEqualTo(expected);

@@ -18,7 +18,7 @@ public class Class {
 
     static final String STATIC = "static";
 
-    static final Consumer<CodeInsightTestFixture> SAVE_ACTION_MANAGER = (fixture) ->
+    static final Consumer<CodeInsightTestFixture> SAVE_ACTION_MANAGER = fixture ->
             new WriteCommandAction.Simple(fixture.getProject()) {
                 @Override
                 protected void run() {

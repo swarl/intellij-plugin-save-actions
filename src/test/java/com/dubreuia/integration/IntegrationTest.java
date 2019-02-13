@@ -10,7 +10,7 @@ import com.intellij.testFramework.fixtures.impl.LightTempDirTestFixtureImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
-import java.nio.file.Path;
+import java.io.File;
 import java.nio.file.Paths;
 
 import static com.dubreuia.core.action.BatchActionConstants.SAVE_ACTION_BATCH_MANAGER;
@@ -60,10 +60,10 @@ public abstract class IntegrationTest {
     }
 
     private String getTestDataPath() {
-        Path classes = Paths.get(getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
-        Path resources = Paths.get(classes.getParent().toString(), "resources");
-        Path root = Paths.get(resources.toString(), getClass().getPackage().getName().split("[.]"));
-        return root.toString();
+
+        return Paths.get(new File("src/test/resources").getAbsolutePath(),
+                getClass().getPackage().getName().split("[.]"))
+                .toString();
     }
 
 }
