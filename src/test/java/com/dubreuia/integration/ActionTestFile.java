@@ -11,6 +11,9 @@ public enum ActionTestFile {
     Reformat_KO_Rearrange_OK,
     Reformat_OK_Rearrange_OK,
 
+    Reformat_KO_Import_KO_Rearrange_KO,
+    Reformat_OK_Import_OK_Rearrange_OK,
+
     FieldCanBeFinal_KO,
     FieldCanBeFinal_OK,
 

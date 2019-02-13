@@ -24,7 +24,7 @@ public enum Action {
             activation, false),
 
     noActionIfCompileErrors("No action if compile errors (applied per file)",
-            activation, false),
+            activation, true),
 
     // Global
 
@@ -35,11 +35,11 @@ public enum Action {
             global, true),
 
     reformatChangedCode("Reformat only changed code (only if VCS configured)",
-            global, false),
+            global, true),
 
     rearrange("Rearrange fields and methods " +
             "(configured in \"File > Settings > Editor > Code Style > (...) > Arrangement\")",
-            global, false),
+            global, true),
 
     // Build
 
@@ -55,10 +55,10 @@ public enum Action {
     // Java fixes
 
     fieldCanBeFinal("Add final modifier to field",
-            java, false),
+            java, true),
 
     localCanBeFinal("Add final modifier to local variable or parameter",
-            java, false),
+            java, true),
 
     methodMayBeStatic("Add static modifier to methods",
             java, false),
@@ -76,38 +76,37 @@ public enum Action {
             java, false),
 
     missingOverrideAnnotation("Add missing @Override annotations",
-            java, false),
+            java, true),
 
     useBlocks("Add blocks to if/while/for statements",
-            java, false),
+            java, true),
 
     generateSerialVersionUID("Add a serialVersionUID field for Serializable classes",
-            java, false),
+            java, true),
 
     unnecessaryThis("Remove unnecessary this to field and method",
-            java, false),
+            java, true),
 
     finalPrivateMethod("Remove final from private method",
-            java, false),
+            java, true),
 
     unnecessaryFinalOnLocalVariableOrParameter("Remove unnecessary final to local variable or parameter",
             java, false),
 
     explicitTypeCanBeDiamond("Remove explicit generic type for diamond",
-            java, false),
+            java, true),
 
     suppressAnnotation("Remove unused suppress warning annotation",
-            java, false),
+            java, true),
 
     unnecessarySemicolon("Remove unnecessary semicolon",
-            java, false),
-
-    accessCanBeTightened("Change visibility of field or method to lower access",
-            java, false),
+            java, true),
 
     unnecessaryParentheses("Remove unnecessary parentheses",
             java, true),
 
+    accessCanBeTightened("Change visibility of field or method to lower access",
+            java, false)
     ;
 
     private final String text;
