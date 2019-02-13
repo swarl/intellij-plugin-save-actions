@@ -3,8 +3,8 @@
 <idea-plugin>
 
     <id>com.dubreuia</id>
-    <name>Save Actions</name>
-    <version>1.4.0</version>
+    <name>Save Actions 2</name>
+    <version>2.0.0-ch.css</version>
     <vendor email="dubreuil.alex@gmail.com" url="https://www.github.com/dubreuia">Alexandre DuBreuil</vendor>
 
     <description><![CDATA[
@@ -42,7 +42,7 @@
 
 <ul>
   <li><a href="https://plugins.jetbrains.com/plugin/7642-save-actions">Jetbrains plugin page</a></li>
-  <li><a href="https://github.com/dubreuia/intellij-plugin-save-actions">Github README</a></li>
+  <li><a href="https://github.com/swarl/intellij-plugin-save-actions">Github README</a></li>
   <li><a href="https://github.com/dubreuia/intellij-plugin-save-actions/issues">Github issues</a></li>
   <li><a href="https://twitter.com/dubreuia">Twitter</a></li>
 </ul>
