@@ -9,7 +9,7 @@
 
 Supports configurable, Eclipse like, save actions, including "optimize imports", "reformat code", "rearrange code", "compile file" and some quick fixes like "add / remove 'this' qualifier", etc. The plugin executes the configured actions when the file is synchronised (or saved) on disk.
 
-Using the save actions plugin makes your code cleaner and more uniform across your code base by enforcing your code style and code rules every time you save. The settings file (see [files location](#files-location)) can be shared in your development team so that every developer has the same configuration.
+Using the save actions plugin makes your code cleaner and more uniform across your code base by enforcing your code style and code rules every time you save. The settings file (see [files location](#files-location)) is stored globally.
 
 The code style applied by the save actions plugin is the one configured your settings at "File > Settings > Editor > Code Style". For some languages, custom formatter may also be triggered by the save actions plugin. For example for Dart developers, enable "Use the dartfmt tool when formatting the whole file" option in "File > Settings > Editor > Code Style > Dart > Dartfmt".
 
@@ -56,7 +56,7 @@ Works in JetBrains IDE with Java support, like Intellij IDEA and AndroidStudio.
 
 ## Compatibility
 
-Built with IntelliJ IDEA IC-2016.3, JDK 1.8, those are the currently supported products, and is not expected to work in other products:
+Built with IntelliJ IDEA IC-2018.3, JDK 1.8, those are the currently supported products, and is not expected to work in other products:
 
 - <img src="./docs/icon-intellij-idea.svg" width="30"> Intellij IDEA (ultimate and community)
 - <img src="./docs/icon-pycharm.svg" width="30"> PyCharm (professional and community)
@@ -142,6 +142,7 @@ If a quick fix adds something that is removed by another quick fix, the removal 
 | Remove explicit generic type for diamond                                 | The list creation `List<String> list = new ArrayList<String>()` becomes `List<String> list = new ArrayList<>()`
 | Remove unused suppress warning annotation                                | The annotation `@SuppressWarning` will be removed if it is unused (warning: "unchecked" doesn't work properly see [#87](https://github.com/dubreuia/intellij-plugin-save-actions/issues/87))
 | Remove unnecessary semicolon                                             | The statement `int variable = 0;;` becomes `int variable = 0;`
+| Remove unnecessary parentheses                                           | The statement `if((a>b) && (b<c))` becomes `if(a>b && b<c)`
 | Change visibility of field or method to lower access                     | The field `public int field = 0` becomes `private int field = 0` if it is not used outside class, also working for methods
 
 ## Actions
@@ -180,7 +181,7 @@ file_export_version=3.0
 ## Files location
 
 - **idea.log**: The log file the save actions plugin writes in. It contains debug information, prefixed with `com.dubreuia.SaveActionManager`. If you are using default locations, it would be in `~/.IntelliJIdeaVERSION/system/log/idea.log`.
-- **saveactions_settings.xml**: The settings file is saved by project in the `.idea` folder. That file can be committed in git thus shared in your development team. If you are using the default locations, it would be in `~/IdeaProjects/PROJECT_NAME/.idea/saveactions_settings.xml`
+- **saveactions_settings.xml**: The settings file is saved in the idea folder in the users home directory, after settings page has opended and applied. If you are using the default locations, it would be in `~/.IntelliJIdeaVERSION/config/options/saveactions_settings.xml`
 
 ## Contributors
 
