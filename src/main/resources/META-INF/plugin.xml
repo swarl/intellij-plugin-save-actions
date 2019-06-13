@@ -4,7 +4,7 @@
 
     <id>com.dubreuia</id>
     <name>Save Actions 2</name>
-    <version>2.0.0-ch.css</version>
+    <version>2.0.0-ch.css-prj</version>
     <vendor email="dubreuil.alex@gmail.com" url="https://www.github.com/dubreuia">Alexandre DuBreuil</vendor>
 
     <description><![CDATA[
@@ -61,8 +61,8 @@
     <depends optional="true" config-file="plugin-java.xml">com.intellij.modules.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.dubreuia.model.Storage"/>
-        <applicationConfigurable id="settings.saveactions" instance="com.dubreuia.ui.Configuration"/>
+        <projectService serviceImplementation="com.dubreuia.model.Storage"/>
+        <projectConfigurable id="settings.saveactions" instance="com.dubreuia.ui.Configuration"/>
     </extensions>
 
     <application-components>

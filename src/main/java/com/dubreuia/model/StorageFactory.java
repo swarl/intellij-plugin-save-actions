@@ -9,7 +9,7 @@ import java.util.function.Function;
 public enum StorageFactory {
 
     DEFAULT(project -> {
-        return ServiceManager.getService(Storage.class);
+        return ServiceManager.getService(project, Storage.class);
     }),
 
     JAVA(project -> {

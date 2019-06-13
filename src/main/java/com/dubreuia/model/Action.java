@@ -55,10 +55,10 @@ public enum Action {
     // Java fixes
 
     fieldCanBeFinal("Add final modifier to field",
-            java, true),
+            java, false),
 
     localCanBeFinal("Add final modifier to local variable or parameter",
-            java, true),
+            java, false),
 
     methodMayBeStatic("Add static modifier to methods",
             java, false),
@@ -106,8 +106,7 @@ public enum Action {
             java, true),
 
     accessCanBeTightened("Change visibility of field or method to lower access",
-            java, false)
-    ;
+            java, false);
 
     private final String text;
     private final ActionType type;
@@ -117,18 +116,6 @@ public enum Action {
         this.text = text;
         this.type = type;
         this.defaultValue = defaultValue;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public ActionType getType() {
-        return type;
-    }
-
-    public boolean isDefaultValue() {
-        return defaultValue;
     }
 
     public static Set<Action> getDefaults() {
@@ -143,6 +130,18 @@ public enum Action {
 
     public static Stream<Action> stream(ActionType type) {
         return Arrays.stream(values()).filter(action -> action.type.equals(type));
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public ActionType getType() {
+        return type;
+    }
+
+    public boolean isDefaultValue() {
+        return defaultValue;
     }
 
 }
