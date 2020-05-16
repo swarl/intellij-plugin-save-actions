@@ -11,22 +11,24 @@ Supports configurable, Eclipse like, save actions, including "optimize imports",
 
 Using the save actions plugin makes your code cleaner and more uniform across your code base by enforcing your code style and code rules every time you save. The settings file (see [files location](#files-location)) is stored globally.
 
-The code style applied by the save actions plugin is the one configured your settings at "File > Settings > Editor > Code Style". For some languages, custom formatter may also be triggered by the save actions plugin. For example for Dart developers, enable "Use the dartfmt tool when formatting the whole file" option in "File > Settings > Editor > Code Style > Dart > Dartfmt".
+The code style applied by the save actions plugin is the one configured your settings at "File > Settings > Editor > Code Style". For some languages, custom formatter (Dartfmt, Prettier, etc.) may also be triggered by the save actions plugin. See the [Editor Actions](#editor-actions) configuration for more information.
 
-Thank you to JetBrains that supports our plugin: they provide an open-source license to us, necessary to build, test and deploy this plugin. Check out their products at [https://www.jetbrains.com](https://www.jetbrains.com/?from=intellij-save-actions-plugin).
+Thank you to JetBrains for supporting the Save Actions plugin: they provide an open-source license, which is necessary to build, test and deploy this plugin. Check out their products at [https://www.jetbrains.com](https://www.jetbrains.com/?from=intellij-save-actions-plugin).
+
+<p align="center">
+  <img alt="Save Actions Plugin icon light" title="Save Actions Plugin icon light" src="./docs/icon-save-actions.svg" width="200" height="200">
+</p>
 
 ## Content
 
 - [Features](#features)
-- [Compatibility](#compatibility)
 - [Installation](#installation)
+- [Usage](#usage)
 - [Configuration](#configuration)
-- [Actions](#actions)
-- [Eclipse support](#eclipse-support)
+- [Compatibility](#compatibility)
 - [Files location](#files-location)
-- [Contributing](#contributing)
-- [JetBrains plugin page](#jetbrains-plugin-page)
-- [Issues](#issues)
+- [Contributions](#contributions)
+- [Links](#links)
 - [Licence](#licence)
 
 ## Features
@@ -40,6 +42,7 @@ Thank you to JetBrains that supports our plugin: they provide an open-source lic
 - Rearrange code (reorder methods, fields, etc.)
 - Include / exclude files with regex support
 - Works on any file type (Java, Python, XML, etc.)
+- Launch any editor action using "quick lists"
 - Uses a settings file per project you can commit (see [Files location](#files-location))
 - Available keymaps and actions for activation (see [Keymap and actions](#keymap-and-actions))
 
@@ -49,24 +52,12 @@ Thank you to JetBrains that supports our plugin: they provide an open-source lic
 
 Works in JetBrains IDE with Java support, like Intellij IDEA and AndroidStudio.
 
+- Compile project after save (if compiling is available)
+- Reload debugger after save (if compiling is available)
 - Eclipse configuration file `.epf` support (see [Eclipse support](#eclipse-support))
 - Automatically fix Java inspections (see [Java quick fixes](#java-fixes))
 
 ![Save actions plugin settings page for Java](https://github.com/dubreuia/intellij-plugin-save-actions/blob/master/docs/intellij-save-actions-plugin-settings-page-java.png)
-
-## Compatibility
-
-Built with IntelliJ IDEA IC-2018.3, JDK 1.8, those are the currently supported products, and is not expected to work in other products:
-
-- <img src="./docs/icon-intellij-idea.svg" width="30"> Intellij IDEA (ultimate and community)
-- <img src="./docs/icon-pycharm.svg" width="30"> PyCharm (professional and community)
-- <img src="./docs/icon-phpstorm.svg" width="30"> PHPStorm
-- <img src="./docs/icon-android-studio.svg" width="30"> AndroidStudio
-- <img src="./docs/icon-webstorm.svg" width="30"> WebStorm
-- <img src="./docs/icon-rubymine.svg" width="30"> RubyMine
-- <img src="./docs/icon-clion.svg" width="30"> CLion
-
-See issue [#18](https://github.com/dubreuia/intellij-plugin-save-actions/issues/18) for a beta packaging that you can try in other products.
 
 ## Installation
 
@@ -81,6 +72,30 @@ Install it from your IDE (Intellij IDEA, PyCharm, etc.):
 All versions of the plugin are available from the [JetBrains plugin repository](https://plugins.jetbrains.com/plugin/7642). You can download the jar and add it to your IDE (you won't get updates thought):
 
 - "File > Settings > Plugins > Install plugin from disk..."
+
+## Usage
+
+The plugin can trigger automatically or manually on IDE actions (standard actions) or plugin actions. Most actions needs to be enabled individually (see [activation](#activation)).
+
+### IDE actions
+
+The plugin will trigger automatically on any of these IDE actions (needs to be activated with "Activate save actions on file save" in [activation](#activation))):
+
+- **Frame deactivation**, which is when the editor loses focus, configured in "File > Settings > Appearance & Behavior > System Settings > Save files on frame deactivation" .
+- **Application idle**, which is when the IDE isn't used for a period of time, configured in "File > Settings > Appearance & Behavior > System Settings > Save files automatically if application is idle for x sec".
+- **Save All**, which is bound by default to "CTRL + S". Some IDE might use "CTRL + S" for the single **Save Document** action, on which the plugin will NOT trigger. This is by design, see issue [#222](https://github.com/dubreuia/intellij-plugin-save-actions/issues/222).
+
+### Plugin actions
+
+The plugin actions are grouped under the menu "Code > Save Actions". You can associate a keymap to any action in "Settings > Keymap > Search 'save actions'".
+
+- **Enable Save Actions (default: not binded)** will activate or deactivate the plugin by changing the configuration.
+- **Execute Save Actions on shortcut (default: "CTRL + SHIFT + S")** will trigger the plugin manually (needs to be activated with "Activate save actions on shortcut" in [activation](#activation)).
+- **Execute Save Actions on multiple files (default: not binded)** will show a popup to select the files (or a scope) on which to trigger the plugin (needs to be activated with "Activate save actions on batch" in [activation](#activation)).
+
+<p align="center">
+  <img alt="Save Actions Plugin Action menu" title="Save Actions Plugin Action menu" src="./docs/intellij-save-actions-plugin-action-menu.png" width="371" height="77">
+</p>
 
 ## Configuration
 
@@ -110,7 +125,20 @@ You can quickly toggle the plugin activation by using the "Enable Save Action" a
 
 | Name                               | Description
 | ---                                | ---
-| Compile file                       | Enable / disable compiling of the modified file. The compiler might compile other files as well. **Warning: this option triggers one build action for each file, use sparingly (see [#128](https://github.com/dubreuia/intellij-plugin-save-actions/issues/128))**
+| *\[experimental\]* Compile file    | Enable / disable compiling of the modified file. The compiler might compile other files as well. **Warning: this feature is experimental, please post feedback in the github issues**
+| *\[experimental\]* Reload file     | Enable / disable reloading of the files in the running debugger, meaning the files will get compiled first. The compiler might compile other files as well. **Warning: this feature is experimental, please post feedback in the github issues**
+| *\[experimental\]* Execute action  | Enable / disable executing of an action using quick lists (using quick lists at "File > Settings > Appearance & Behavior > Quick Lists"). See [Editor Actions](#editor-actions) for more information **Warning: this feature is experimental, please post feedback in the github issues**
+
+#### Editor Actions
+
+Some languages requires specific actions, such as Dartfmt or Prettier:
+
+- For Dart developers, enable "Use the dartfmt tool when formatting the whole file" option in "File > Settings > Editor > Code Style > Dart > Dartfmt".
+- For Prettier (https://prettier.io/) users, read below.
+
+Using the "Execute action" configuration, the plugin can launch arbitrary editor actions. While not all actions will work, it can be used to launch external tools, specific runs, etc. This feature is experimental, you can post your feedback on issue [#118](https://github.com/dubreuia/intellij-plugin-save-actions/issues/118).
+
+The actions are implemented in the form of "quick lists", an IDE function that is used to define a list of actions that can be then executed. Quick lists can be configured at "File > Settings > Appearance & Behavior > Quick Lists", and once configured, one can be selected and used in the plugin, using the "Execution action" configuration drop down list.
 
 ### File
 
@@ -128,6 +156,7 @@ If a quick fix adds something that is removed by another quick fix, the removal 
 | ---                                                                      | ---
 | Add final modifier to field                                              | The field `private int field = 0` becomes `private final int field = 0`
 | Add final modifier to local variable or parameter                        | The local variable `int variable = 0` becomes `final int variable = 0`
+| Add final modifier to local variable or parameter except if implicit     | The local variable `int variable = 0` becomes `final int variable = 0`, but not if it is implicit like in try with resources `try (Resource r = new Resource())`
 | Add static modifier to methods                                           | The method `private void method()` becomes `private static void method()` if the content does not references instance fields
 | Add this to field access                                                 | The access to instance field `field = 0` becomes `this.field = 0`
 | Add this to method access                                                | The access to instance method `method()` becomes `this.method()`
@@ -142,24 +171,32 @@ If a quick fix adds something that is removed by another quick fix, the removal 
 | Remove explicit generic type for diamond                                 | The list creation `List<String> list = new ArrayList<String>()` becomes `List<String> list = new ArrayList<>()`
 | Remove unused suppress warning annotation                                | The annotation `@SuppressWarning` will be removed if it is unused (warning: "unchecked" doesn't work properly see [#87](https://github.com/dubreuia/intellij-plugin-save-actions/issues/87))
 | Remove unnecessary semicolon                                             | The statement `int variable = 0;;` becomes `int variable = 0;`
+| Remove blocks from if/while/for statements                               | The statement `if (true) { return false; }` becomes `if (true) return false;`, also working for `for` and `while` statements
 | Remove unnecessary parentheses                                           | The statement `if((a>b) && (b<c))` becomes `if(a>b && b<c)`
 | Change visibility of field or method to lower access                     | The field `public int field = 0` becomes `private int field = 0` if it is not used outside class, also working for methods
 
-## Actions
+## Compatibility
 
-Save actions are grouped under the menu "Code > Save Actions". Remember that any action is available in the action menu "CTRL + SHIFT + A". You can associate a keymap to any action in "Settings > Keymap > Search 'save actions'".
+Built for SDK version 2016.3, 2018.3, 2019.3, using JDK 8, those are the currently supported products, and is not expected to work in other products:
 
-- **Enable Save Actions (default: not binded)** will activate or deactivate the plugin by changing the configuration
-- **Execute Save Actions on shortcut (default: "CTRL + SHIFT + S")** will trigger the plugin manually, only if the configuration allows shortcuts (see [activation](#activation) section, the "Activate save actions on shortcut" needs to be enabled)
-- **Execute Save Actions on multiple files (default: not binded)** will show a popup to select the files (or a scope) on which to trigger the plugin
+- <img src="./docs/icon-intellij-idea.svg" width="30"> Intellij IDEA (ultimate and community)
+- <img src="./docs/icon-pycharm.svg" width="30"> PyCharm (professional and community)
+- <img src="./docs/icon-phpstorm.svg" width="30"> PHPStorm
+- <img src="./docs/icon-android-studio.svg" width="30"> AndroidStudio
+- <img src="./docs/icon-webstorm.svg" width="30"> WebStorm
+- <img src="./docs/icon-rubymine.svg" width="30"> RubyMine
+- <img src="./docs/icon-clion.svg" width="30"> CLion
 
-<p align="center">
-  <img src="./docs/intellij-save-actions-plugin-action-menu.png" width="371" height="77">
-</p>
+See issue [#18](https://github.com/dubreuia/intellij-plugin-save-actions/issues/18) for a beta packaging that you can try in other products.
 
-## Eclipse support
+### Backward compatibility
 
-The save-actions plugin supports Eclipse configuration `.epf` files (Java IDE only). You can specify a path to an Eclipse configuration file in the "Eclipse support" settings section to import it. The plugin will load the content of the file in the plugin configuration, and disable the plugin configuration options (the checkbox will be grayed out). Use the "reset" button to remove the import.
+- For SDK 2016.3, the latest version is [Release 1.6.0+2016.3](https://github.com/dubreuia/intellij-plugin-save-actions/releases/tag/v1.6.0%2B2016.3) (not maintained anymore).
+- For SDK 2018.3, 2019.3 and EAP (not released on plugin repository) the latest version is in the [releases](https://github.com/dubreuia/intellij-plugin-save-actions/releases).
+
+### Eclipse configuration support
+
+The save-actions plugin supports Eclipse configuration `.epf` files by the [Workspace Mechanic](https://marketplace.eclipse.org/content/workspace-mechanic) Eclipse plugin (Java IDE only). You can specify a path to an Eclipse configuration file in the "Eclipse support" settings section to import it. The plugin will load the content of the file in the plugin configuration, and disable the plugin configuration options (the checkbox will be grayed out). Use the "reset" button to remove the import.
 
 The plugin will stay in sync with your Eclipse configuration file. Not every features are present on either side, but the ones that are in common are supported.
 
@@ -178,26 +215,39 @@ file_export_version=3.0
 ...
 ```
 
+### Other plugin compatibility
+
+Some things to note when using other plugins with the Save Actions plugin:
+
+- [IdeaVim](https://plugins.jetbrains.com/plugin/164-ideavim): Since the Save Actions plugin do not trigger on the "Save Document" action (see [usage](#usage)), using `:w` to save in IdeaVim won't trigger the plugin, but using `:wa` will, since it calls the "Save All" action. See issue [#222](https://github.com/dubreuia/intellij-plugin-save-actions/issues/222)).
+- [detekt](https://plugins.jetbrains.com/plugin/10761-detekt): Using the detekt plugin breaks the Save Actions plugin, see issue [#270](https://github.com/dubreuia/intellij-plugin-save-actions/issues/270).
+
 ## Files location
 
 - **idea.log**: The log file the save actions plugin writes in. It contains debug information, prefixed with `com.dubreuia.SaveActionManager`. If you are using default locations, it would be in `~/.IntelliJIdeaVERSION/system/log/idea.log`.
 - **saveactions_settings.xml**: The settings file is saved in the idea folder in the users home directory, after settings page has opended and applied. If you are using the default locations, it would be in `~/.IntelliJIdeaVERSION/config/options/saveactions_settings.xml`
 
-## Contributors
+## Contributions
 
-Big thanks to all the contributors submitting issues, testing, and especially submitting pull requests.
+### Contributors
 
-See [contributors graph](https://github.com/dubreuia/intellij-plugin-save-actions/graphs/contributors) :hearts:
+Big thanks to all the contributors submitting issues, testing, and especially submitting pull requests. See [contributors graph](https://github.com/dubreuia/intellij-plugin-save-actions/graphs/contributors) :hearts:
 
-## Contributing
+### Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+See [CONTRIBUTING](CONTRIBUTING.md).
 
-## JetBrains plugin page
+### Releasing
+
+See [RELEASING](RELEASING.md).
+
+## Links
+
+### JetBrains plugin page
 
 The plugin is in the [JetBrains plugin repository](https://plugins.jetbrains.com/plugin/7642-save-actions), please take the time to [rate it](https://plugins.jetbrains.com/plugin/7642-save-actions)! 
 
-## Issues
+### Issues
 
 The plugin does not work? You want more features? You can [ask me on twitter](https://twitter.com/dubreuia) or [create an issue on github](https://github.com/dubreuia/intellij-plugin-save-actions/issues).
 

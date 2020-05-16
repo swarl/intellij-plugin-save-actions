@@ -2,16 +2,22 @@ package com.dubreuia.integration;
 
 public class Class {
 
-    public static void main(final String[] args) {
+    private void method() {
         final String canBeFinal = "";
         String cannotBeFinal = "";
         cannotBeFinal = "";
+        try (Resource r = new Resource()) {
+
+        }
     }
 
-    public void method(final String param1, final String param2) {
-        final String canBeFinal = "";
-        String cannotBeFinal = "";
-        cannotBeFinal = "";
+    class Resource implements AutoCloseable {
+
+        @Override
+        public void close() {
+
+        }
+
     }
 
     public String lombok() {

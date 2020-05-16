@@ -19,6 +19,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import static com.dubreuia.core.ExecutionMode.batch;
 import static com.dubreuia.core.component.SaveActionManager.LOGGER;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
@@ -60,7 +61,7 @@ class Engine {
         Set<PsiFile> psiFilesEligible = psiFiles.stream()
                 .filter(psiFile -> isPsiFileEligible(project, psiFile))
                 .collect(toSet());
-        LOGGER.info("Filtered files " + psiFilesEligible);
+        LOGGER.info("Valid files " + psiFilesEligible);
         processPsiFiles(project, psiFilesEligible, mode);
     }
 
@@ -79,7 +80,7 @@ class Engine {
                 .peek(command -> LOGGER.info("Execute command " + command + " on " + psiFiles.size() + " files"))
                 .map(command -> new SimpleEntry<>(command.getAction(), command.execute()))
                 .collect(toList());
-        LOGGER.info("Exit processors with results "
+        LOGGER.info("Exit engine with results "
                 + results.stream()
                 .map(entry -> entry.getKey() + ":" + entry.getValue())
                 .collect(toList()));
@@ -126,6 +127,9 @@ class Engine {
     }
 
     private boolean isPsiFileFresh(PsiFile psiFile) {
+        if (mode == batch) {
+            return true;
+        }
         return psiFile.getModificationStamp() != 0;
     }
 

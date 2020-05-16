@@ -4,10 +4,10 @@ import com.dubreuia.core.ExecutionMode;
 import com.dubreuia.model.Action;
 import com.dubreuia.processors.Processor;
 import com.dubreuia.processors.SaveWriteCommand;
+import com.dubreuia.processors.java.inspection.CustomLocalCanBeFinal;
 import com.dubreuia.processors.java.inspection.SerializableHasSerialVersionUIDFieldInspectionWrapper;
 import com.intellij.codeInspection.ExplicitTypeCanBeDiamondInspection;
 import com.intellij.codeInspection.LocalInspectionTool;
-import com.intellij.codeInspection.localCanBeFinal.LocalCanBeFinal;
 import com.intellij.codeInspection.visibility.CustomAccessCanBeTightenedInspection;
 import com.intellij.codeInspection.visibility.VisibilityInspection;
 import com.intellij.openapi.project.Project;
@@ -19,6 +19,7 @@ import com.siyeh.ig.performance.MethodMayBeStaticInspection;
 import com.siyeh.ig.style.ControlFlowStatementWithoutBracesInspection;
 import com.siyeh.ig.style.CustomUnqualifiedStaticUsageInspection;
 import com.siyeh.ig.style.FieldMayBeFinalInspection;
+import com.siyeh.ig.style.SingleStatementInBlockInspection;
 import com.siyeh.ig.style.UnnecessaryFinalOnLocalVariableOrParameterInspection;
 import com.siyeh.ig.style.UnnecessaryParenthesesInspection;
 import com.siyeh.ig.style.UnnecessarySemicolonInspection;
@@ -44,7 +45,14 @@ public enum JavaProcessor implements Processor {
             FieldMayBeFinalInspection::new),
 
     localCanBeFinal(Action.localCanBeFinal,
-            LocalCanBeFinal::new),
+            CustomLocalCanBeFinal::new),
+
+    localCanBeFinalExceptImplicit(Action.localCanBeFinalExceptImplicit,
+            () -> {
+                CustomLocalCanBeFinal inspection = new CustomLocalCanBeFinal();
+                inspection.REPORT_IMPLICIT_FINALS = false;
+                return inspection;
+            }),
 
     methodMayBeStatic(Action.methodMayBeStatic,
             MethodMayBeStaticInspection::new),
@@ -97,6 +105,9 @@ public enum JavaProcessor implements Processor {
 
     unnecessarySemicolon(Action.unnecessarySemicolon,
             UnnecessarySemicolonInspection::new),
+
+    singleStatementInBlock(Action.singleStatementInBlock,
+            SingleStatementInBlockInspection::new),
 
     accessCanBeTightened(Action.accessCanBeTightened,
             () -> new CustomAccessCanBeTightenedInspection(new VisibilityInspection())),

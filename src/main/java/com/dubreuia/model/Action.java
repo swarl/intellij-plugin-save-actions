@@ -43,13 +43,14 @@ public enum Action {
 
     // Build
 
-    compile("Compile files (using \"Build > Build Project\")",
+    compile("[experimental] Compile files (using \"Build > Build Project\")",
             build, false),
 
-    reload("Reload files in running debugger (using \"Run > Reload Changed Classes\")",
+    reload("[experimental] Reload files in running debugger (using \"Run > Reload Changed Classes\")",
             build, false),
 
-    executeAction("Execute an action (using quick lists at \"File > Settings > Appearance & Behavior > Quick Lists\"",
+    executeAction("[experimental] Execute an action (using quick lists at " +
+            "\"File > Settings > Appearance & Behavior > Quick Lists\")",
             build, false),
 
     // Java fixes
@@ -59,6 +60,9 @@ public enum Action {
 
     localCanBeFinal("Add final modifier to local variable or parameter",
             java, true),
+
+    localCanBeFinalExceptImplicit("Add final modifier to local variable or parameter except if it is implicit",
+            java, false),
 
     methodMayBeStatic("Add static modifier to methods",
             java, false),
@@ -104,6 +108,9 @@ public enum Action {
 
     unnecessaryParentheses("Remove unnecessary parentheses",
             java, true),
+
+    singleStatementInBlock("Remove blocks from if/while/for statements",
+            java, false),
 
     accessCanBeTightened("Change visibility of field or method to lower access",
             java, false)

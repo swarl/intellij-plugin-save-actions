@@ -2,6 +2,7 @@ package com.dubreuia.model;
 
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
+import com.intellij.serviceContainer.NonInjectable;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.jetbrains.annotations.NotNull;
 
@@ -10,8 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@State(name = "SaveActionSettings",
-        storages = {@com.intellij.openapi.components.Storage(file = "./saveactions_settings.xml")})
+@State(name = "SaveActionSettings", storages = {@com.intellij.openapi.components.Storage("saveactions_settings.xml")})
 public class Storage implements PersistentStateComponent<Storage> {
 
     private boolean firstLaunch;
@@ -21,6 +21,9 @@ public class Storage implements PersistentStateComponent<Storage> {
     private String configurationPath;
     private List<String> quickLists;
 
+    // Tested in 2018.3, seems like it works anyway
+    @SuppressWarnings("MissingRecentApi")
+    @NonInjectable
     public Storage() {
         firstLaunch = true;
         actions = Action.getDefaults();
@@ -30,6 +33,9 @@ public class Storage implements PersistentStateComponent<Storage> {
         quickLists = new ArrayList<>();
     }
 
+    // Tested in 2018.3, seems like it works anyway
+    @SuppressWarnings("MissingRecentApi")
+    @NonInjectable
     public Storage(Storage storage) {
         firstLaunch = storage.firstLaunch;
         actions = new HashSet<>(storage.actions);

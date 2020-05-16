@@ -20,6 +20,9 @@ public enum ActionTestFile {
     LocalCanBeFinal_KO,
     LocalCanBeFinal_OK,
 
+    LocalCanBeFinalExceptImplicit_KO,
+    LocalCanBeFinalExceptImplicit_OK,
+
     MethodMayBeStatic_KO,
     MethodMayBeStatic_OK,
 
@@ -61,6 +64,9 @@ public enum ActionTestFile {
 
     UnnecessarySemicolon_KO,
     UnnecessarySemicolon_OK,
+
+    SingleStatementInBlock_KO,
+    SingleStatementInBlock_OK,
 
     AccessCanBeTightened_KO,
     AccessCanBeTightened_OK,
