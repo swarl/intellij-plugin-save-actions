@@ -41,7 +41,7 @@ intellij {
 
 // Add plugin group and version
 group 'com.dubreuia'
-version '2.0.0-ch.css'
+version '3.0.0-ch.css'
 
 // Add only maven central as repository
 repositories {
